@@ -89,7 +89,7 @@ Draw.loadPlugin(function (ui) {
     };
     stpaControlAction.prototype.handler = stpaStateHandler;
     stpaControlAction.prototype.create = function () {
-        var label = '<div style="text-align: left"><div style="text-align: center">Relationship</div>;'
+        var label = '<div style="text-align: left"><div style="text-align: center">Control Action</div>;'
         var cell = new mxCell('', new mxGeometry(0, 0, 160, 0), 'edgeStyle=none;rounded=0;html=1;entryX=0;entryY=0;jettySize=auto;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;fontColor=#000000;jumpStyle=none;dashed=0;');
         cell.setValue(mxUtils.createXmlDocument().createElement('object'));
         cell.geometry.setTerminalPoint(new mxPoint(0, 0), true);
@@ -108,7 +108,7 @@ Draw.loadPlugin(function (ui) {
     };
     stpaFeedback.prototype.handler = stpaStateHandler;
     stpaFeedback.prototype.create = function () {
-        var label = '<div style="text-align: left"><div style="text-align: center">Relationship</div>;'
+        var label = '<div style="text-align: left"><div style="text-align: center">Feedback</div>;'
         var cell = new mxCell('', new mxGeometry(0, 0, 160, 0), 'edgeStyle=none;rounded=0;html=1;entryX=0;entryY=0;jettySize=auto;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;fontColor=#000000;jumpStyle=none;dashed=1;');
         cell.setValue(mxUtils.createXmlDocument().createElement('object'));
         cell.geometry.setTerminalPoint(new mxPoint(0, 0), true);
@@ -126,11 +126,11 @@ Draw.loadPlugin(function (ui) {
     };
     stpaController.prototype.handler = stpaStateHandler;
     stpaController.prototype.create = function () {
-        var cell = new mxCell('', new mxGeometry(0, 70, 160, 110), 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#dae8fc;fontColor=#000000;align=center;arcSize=7;strokeColor=#6c8ebf;shadow=0');
+        var cell = new mxCell('', new mxGeometry(0, 70, 160, 110), 'rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#dae8fc;fontColor=#000000;align=center;arcSize=7;strokeColor=#6c8ebf;shadow=0');
         // 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#ffffff;fontColor=#000000;align=left;arcSize=3;strokeColor=#000000;verticalAlign=bottom;shadow=1');
         cell.setVertex(true);
         cell.setValue(mxUtils.createXmlDocument().createElement('object'));
-        cell.setAttribute('label', '<div style="text-align: left">State</div>');
+        cell.setAttribute('label', '<div style="text-align: left">Controller</div>');
         cell.setAttribute('placeholders', '1');
         cell.setAttribute('opmName', 'State');
         cell.setAttribute('stpaType', 'stpaController');
@@ -141,10 +141,28 @@ Draw.loadPlugin(function (ui) {
     stpaUtils.registCodec(stpaController);
 
 
+  stpaControlledProc = function () {
+    };
+    stpaControlledProc.prototype.handler = stpaStateHandler;
+    stpaControlledProc.prototype.create = function () {
+        var cell = new mxCell('', new mxGeometry(0, 70, 160, 110), 'rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#dae8fc;fontColor=#000000;align=center;arcSize=7;strokeColor=#6c8ebf;shadow=0');
+        // 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#ffffff;fontColor=#000000;align=left;arcSize=3;strokeColor=#000000;verticalAlign=bottom;shadow=1');
+        cell.setVertex(true);
+        cell.setValue(mxUtils.createXmlDocument().createElement('object'));
+        cell.setAttribute('label', '<div style="text-align: left">Controlled Process</div>');
+        cell.setAttribute('placeholders', '1');
+        cell.setAttribute('opmName', 'State');
+        cell.setAttribute('stpaType', 'stpaControlledProc');
+        cell.stpa = this;
+        return cell;
+    };
+
+    stpaUtils.registCodec(stpaControlledProc);
+
 
     // Adds custom sidebar entry
     ui.sidebar.addPalette(sidebar_id, sidebar_title, true, function (content) {
-        var verticies = [stpaController];
+        var verticies = [stpaController,stpaControlledProc];
         for (var i in verticies) {
             var cell = verticies[i].prototype.create();
             content.appendChild(ui.sidebar.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, cell.label));
