@@ -140,7 +140,6 @@ Draw.loadPlugin(function (ui) {
 
     stpaUtils.registCodec(stpaController);
 
-
   stpaControlledProc = function () {
     };
     stpaControlledProc.prototype.handler = stpaStateHandler;
@@ -160,9 +159,49 @@ Draw.loadPlugin(function (ui) {
     stpaUtils.registCodec(stpaControlledProc);
 
 
+  stpaActuation = function () {
+    };
+    stpaActuation.prototype.handler = stpaStateHandler;
+    stpaActuation.prototype.create = function () {
+        var cell = new mxCell('', new mxGeometry(0, 70, 160, 110), 'rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#dae8fc;fontColor=#000000;align=center;arcSize=7;strokeColor=#6c8ebf;shadow=0');
+        // 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#ffffff;fontColor=#000000;align=left;arcSize=3;strokeColor=#000000;verticalAlign=bottom;shadow=1');
+        cell.setVertex(true);
+        cell.setValue(mxUtils.createXmlDocument().createElement('object'));
+        cell.setAttribute('label', '<div style="text-align: left">Actuation</div>');
+        cell.setAttribute('placeholders', '1');
+        cell.setAttribute('opmName', 'State');
+        cell.setAttribute('stpaType', 'stpaActuation');
+        cell.stpa = this;
+        return cell;
+    };
+
+    stpaUtils.registCodec(stpaActuation);
+
+
+  stpaSensing = function () {
+    };
+    stpaSensing.prototype.handler = stpaStateHandler;
+    stpaSensing.prototype.create = function () {
+        var cell = new mxCell('', new mxGeometry(0, 70, 160, 110), 'rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#dae8fc;fontColor=#000000;align=center;arcSize=7;strokeColor=#6c8ebf;shadow=0');
+        // 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#ffffff;fontColor=#000000;align=left;arcSize=3;strokeColor=#000000;verticalAlign=bottom;shadow=1');
+        cell.setVertex(true);
+        cell.setValue(mxUtils.createXmlDocument().createElement('object'));
+        cell.setAttribute('label', '<div style="text-align: left">Sensing</div>');
+        cell.setAttribute('placeholders', '1');
+        cell.setAttribute('opmName', 'State');
+        cell.setAttribute('stpaType', 'stpaSensing');
+        cell.stpa = this;
+        return cell;
+    };
+
+    stpaUtils.registCodec(stpaSensing);
+
+
+
+
     // Adds custom sidebar entry
     ui.sidebar.addPalette(sidebar_id, sidebar_title, true, function (content) {
-        var verticies = [stpaController,stpaControlledProc];
+        var verticies = [stpaController,stpaControlledProc,stpaSensing,stpaActuation];
         for (var i in verticies) {
             var cell = verticies[i].prototype.create();
             content.appendChild(ui.sidebar.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, cell.label));
