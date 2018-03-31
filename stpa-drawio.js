@@ -90,19 +90,37 @@ Draw.loadPlugin(function (ui) {
     stpaControlAction.prototype.handler = stpaStateHandler;
     stpaControlAction.prototype.create = function () {
         var label = '<div style="text-align: left"><div style="text-align: center">Relationship</div>;'
-        var cell = new mxCell('', new mxGeometry(0, 0, 160, 0), 'edgeStyle=none;rounded=0;html=1;entryX=0;entryY=0.5;jettySize=auto;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;fontColor=#000000;jumpStyle=none;dashed=0;');
+        var cell = new mxCell('', new mxGeometry(0, 0, 160, 0), 'edgeStyle=none;rounded=0;html=1;entryX=0;entryY=0;jettySize=auto;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;fontColor=#000000;jumpStyle=none;dashed=0;');
         cell.setValue(mxUtils.createXmlDocument().createElement('object'));
         cell.geometry.setTerminalPoint(new mxPoint(0, 0), true);
         cell.geometry.setTerminalPoint(new mxPoint(160, 0), false);
         cell.geometry.relative = true;
         cell.edge = true;
         cell.value.setAttribute('label', label);
-        cell.value.setAttribute('stpaType', 'Relationship');
+        cell.value.setAttribute('stpaType', 'Control Action');
         cell.stpa = this;
         return cell;
     };
     stpaUtils.registCodec(stpaControlAction);
 
+
+   stpaFeedback = function () {
+    };
+    stpaFeedback.prototype.handler = stpaStateHandler;
+    stpaFeedback.prototype.create = function () {
+        var label = '<div style="text-align: left"><div style="text-align: center">Relationship</div>;'
+        var cell = new mxCell('', new mxGeometry(0, 0, 160, 0), 'edgeStyle=none;rounded=0;html=1;entryX=0;entryY=0;jettySize=auto;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;fontColor=#000000;jumpStyle=none;dashed=1;');
+        cell.setValue(mxUtils.createXmlDocument().createElement('object'));
+        cell.geometry.setTerminalPoint(new mxPoint(0, 0), true);
+        cell.geometry.setTerminalPoint(new mxPoint(160, 0), false);
+        cell.geometry.relative = true;
+        cell.edge = true;
+        cell.value.setAttribute('label', label);
+        cell.value.setAttribute('stpaType', 'Feedback');
+        cell.stpa = this;
+        return cell;
+    };
+    stpaUtils.registCodec(stpaFeedback);
 
     stpaController = function () {
     };
@@ -132,6 +150,7 @@ Draw.loadPlugin(function (ui) {
             content.appendChild(ui.sidebar.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, cell.label));
         }
         content.appendChild(ui.sidebar.createEdgeTemplateFromCells([stpaControlAction.prototype.create()], 160, 0, 'Control Action'));
+        content.appendChild(ui.sidebar.createEdgeTemplateFromCells([stpaFeedback.prototype.create()], 160, 0, 'Feedback'));
     });
 
 });
