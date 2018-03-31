@@ -148,7 +148,7 @@ Draw.loadPlugin(function (ui) {
         // 'rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#ffffff;fontColor=#000000;align=left;arcSize=3;strokeColor=#000000;verticalAlign=bottom;shadow=1');
         cell.setVertex(true);
         cell.setValue(mxUtils.createXmlDocument().createElement('object'));
-        cell.setAttribute('label', '<div style="text-align: left">Controlled Process</div><div>Description</div>'');
+        cell.setAttribute('label', '<div style="text-align: left">Controlled Process</div><div>Description</div>');
         //name<div>[Person]</div><div><br></div><div>Beschreibung</div>'
         cell.setAttribute('placeholders', '1');
         cell.setAttribute('opmName', 'State');
